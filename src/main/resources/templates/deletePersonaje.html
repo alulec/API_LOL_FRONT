@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div th:replace="layout :: encabezado"></div>
+<nav th:replace="layout :: navbar"></nav>
+<div>
+    <br>
+</div>
+<div class="container mt-3">
+    <h2>Eliminar campeon</h2>
+    <form th:action="@{http://localhost:8089/campeon/delete}" method="post">
+        <div class="mb-3 mt-3">
+            <label for="id" class="form-label">ID Campeon:</label>
+            <input type="text" class="form-control" id="id" placeholder="Enter name" name="id">
+        </div>
+        <button type="submit" class="btn btn-primary" id="eliminar">Eliminar</button>
+    </form>
+</div>
+<div th:replace="layout :: pie"></div>
+</body>

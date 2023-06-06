@@ -1,0 +1,36 @@
+/ endpoints que me permiten consumir la api backend
+@GetMapping("/{id}")
+public String getPersonaje(@PathVariable int id, Model modelo) throws JsonProcessingException {
+String uri = "http://localhost:8080/personajes/" + id;
+
+
+Mono<Personaje> personajeMono = webClient.get()
+  .uri(uri)
+  .retrieve()
+  .bodyToMono(Personaje.class);
+  Personaje per = personajeMono.block();
+
+  modelo.addAttribute("campeon", per);
+  return "readCampeon";
+
+  }
+
+  @PostMapping("/create")
+  public String createCrear(@ModelAttribute Personaje personaje, Model modelo){
+  String uri = "http://localhost:8080/personajes/save";
+  Gson gson = new Gson();
+  String personajeJSON = gson.toJson(personaje);
+  System.out.println(personajeJSON);
+
+  Mono<Personaje> resultadoMono = webClient.post()
+    .uri(uri)
+    .contentType(MediaType.APPLICATION_JSON)
+    .bodyValue(personajeJSON)
+    .retrieve()
+    .bodyToMono(Personaje.class);
+    Personaje per = resultadoMono.block();
+
+    modelo.addAttribute("campeon", per);
+
+    return "readPersonaje";
+    }

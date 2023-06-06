@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div th:replace="layout :: encabezado"></div>
+<nav th:replace="layout :: navbar"></nav>
+<div>
+    <br>
+</div>
+<div class="container mt-3">
+    <h2>Agregar nuevo campeon</h2>
+    <form th:object="${nuevoCampeon}" th:action="@{http://localhost:8089/campeon/create}" method="post">
+        <div class="mb-3 mt-3">
+            <label  for="idCampeon" class="form-label">ID:</label>
+            <input th:field="*{id}" type="number" class="form-control" id="idCampeon" placeholder="Enter ID" name="idCampeon">
+        </div>
+        <div class="mb-3 mt-3">
+            <label  for="nombre" class="form-label">Nombre:</label>
+            <input th:field="*{nombre}" type="text" class="form-control" id="nombre" placeholder="Enter name" name="nombre">
+        </div>
+        <div class="mb-3">
+            <label for="region" class="form-label">Region:</label>
+            <input th:field="*{region}" type="text" class="form-control" id="region" placeholder="Enter region" name="region">
+        </div>
+        <div class="mb-3">
+            <label for="urlImagen" class="form-label">Link imagen:</label>
+            <input th:field="*{urlImagen}" type="text" class="form-control" id="urlImagen" placeholder="Enter url" name="urlImagen">
+        </div>
+        <div class="mb-3">
+            <label for="lore" class="form-label">Lore:</label>
+            <input th:field="*{lore}" type="text" class="form-control" id="lore" placeholder="Enter lore" name="lore">
+        </div>
+        <button type="submit" class="btn btn-primary" id="agregarPersonaje" onclick="leerDatos" >Guardar</button>
+    </form>
+</div>
+<div th:replace="layout :: pie"></div>
+
+</body>
