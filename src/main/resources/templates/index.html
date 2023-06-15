@@ -3,25 +3,68 @@
 <head th:replace="layout :: head">
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        div.gallery {
+          margin: 5px;
+          border: 1px solid #ccc;
+          float: left;
+          width: 180px;
+        }
+
+        div.gallery:hover {
+          border: 1px solid #777;
+        }
+
+        div.gallery img {
+          width: 100%;
+          height: auto;
+        }
+    </style>
 </head>
-<body>
 <div th:replace="layout :: encabezado"></div>
-<nav th:replace="layout :: navbar"></nav>
+<body>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:fragment="navbar">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="http://localhost:8089/campeon/index">Campeones</a>
+        <button class="navbar-toggler" type="submit" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mynavbar">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:8089/campeon/crear">Agregar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:8089/campeon/borrar">Borrar</a>
+                </li>
+            </ul>
+            <form class="d-flex" th:object="${buscarCampeon}" th:action="@{http://localhost:8089/campeon/id}" method="post">
+                <input th:field="*{id}" id="id" name="id" class="form-control me-2" type="text" placeholder="Search" for="search">
+                <button class="btn btn-primary" type="submit" id="search">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
 <div>
     <br>
 </div>
-<div th:each="campeon : ${campeones}" class="container">
-    <div class="row justify-content-md-center">
-        <div class="card" style="width:400px">
-            <br>
-            <img class="card-img-top" th:src="${campeon.urlImagen}" alt="Card image">
-            <div class="card-body">
-                <h2 class="card-title" th:text="'ID: ' + ${campeon.id} + ' Campeon: ' + ${campeon.nombre}"></h2>
-                <h4 class="card-title" th:text="'Región: ' + ${campeon.region}"></h4>
-                <p class="card-text" th:text="${campeon.lore}"></p>
+<div class="mx-auto">
+<div style="display: flex; flex-wrap: wrap; pading: 10;">
+    <div th:each="campeon : ${campeones}" >
+        <div class=" container m-1 pb-1">
+            <div class="card" style="width:400px">
+                <br>
+                <img class="card-img-top" th:src="${campeon.urlImagen}" alt="Card image">
+                <div class="card-body">
+                    <h2 class="card-title" th:text="'Campeon: ' + ${campeon.nombre}"></h2>
+                    <h4 class="card-title" th:text="'Región: ' + ${campeon.region}"></h4>
+                    <p class="card-text lh-sm" th:text="${campeon.lore}"></p>
+                    <h6 th:text="'ID: ' + ${campeon.id}"></h6>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<div th:replace="layout :: pie"></div>
+
 </body>
+<div th:replace="layout :: pie"></div>

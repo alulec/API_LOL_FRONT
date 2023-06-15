@@ -37,11 +37,13 @@ public class ControladorVistas {
                 });
         List<Personaje> result = personajesFlux.collectList().block();
         modelo.addAttribute("campeones", result);
+        modelo.addAttribute("buscarCampeon", new Personaje());
 
         return "index";
     }
     @GetMapping("/borrar")
     public String getActualizar(Model modelo){
+        modelo.addAttribute("nuevoCampeon", new Personaje(0,"", "", "", ""));
         return "deletePersonaje";
     }
 
@@ -54,17 +56,16 @@ public class ControladorVistas {
 
     // endpoints que me permiten consumir la api backend
     @PostMapping("/delete")
-    public String borrarPersonaje(@ModelAttribute("id") int id, Model modelo){
-        String uri = "localhost:8080/personajes/delete/";
-
-        Personaje personaje = new Personaje(id, "", "", "", "");
+    public String deletePersonaje(@ModelAttribute Personaje personaje, Model modelo){
+        String uri = "http://localhost:8080/personajes/delete/";
+        int idBorrar = personaje.getId();
+        Personaje personajeBorrar = new Personaje(idBorrar, "sv", "sv", "sv", "sv");
         Gson gson = new Gson();
-        String personajeJSON = gson.toJson(personaje);
-
+        String personajeJSON = gson.toJson(personajeBorrar);
         System.out.println(personajeJSON);
 
         Mono<Personaje> resultadoMono = webClient.post()
-                .uri("localhost:8080/personajes/delete/")
+                .uri(uri)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(personajeJSON)
                 .retrieve()
@@ -72,7 +73,6 @@ public class ControladorVistas {
         Personaje per = resultadoMono.block();
 
         modelo.addAttribute("campeon", per);
-
         return "readPersonaje";
     }
 
@@ -96,10 +96,9 @@ public class ControladorVistas {
         return "readPersonaje";
     }
 
-    @GetMapping("/{id}")
-    public String getPersonaje(@PathVariable int id, Model modelo) throws JsonProcessingException {
-        String uri = "http://localhost:8080/personajes/" + id;
-
+    @PostMapping("/id")
+    public String getPersonaje(@ModelAttribute Personaje personaje, Model modelo) throws JsonProcessingException {
+        String uri = "http://localhost:8080/personajes/" + personaje.getId();
 
         Mono<Personaje> personajeMono = webClient.get()
                 .uri(uri)

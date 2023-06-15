@@ -13,14 +13,14 @@
 <body>
 <!-- Fragmento titulo pagina -->
 <div class="p-5 bg-primary text-white text-center" th:fragment="encabezado">
-    <h1>My First Bootstrap 5 Page</h1>
-    <p>Resize this responsive page to see the effect!</p>
+    <h1>League of Legends</h1>
+    <p>Api de los personajes de LoL</p>
 </div>
 
 <!-- Fragmento barra de navegacion -->
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:fragment="navbar">
     <div class="container-fluid">
-        <a class="navbar-brand" href="http://localhost:8089/campeon/index">Logo</a>
+        <a class="navbar-brand" href="http://localhost:8089/campeon/index"> Campeones </a>
         <button class="navbar-toggler" type="submit" data-bs-toggle="collapse" data-bs-target="#mynavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -33,10 +33,6 @@
                     <a class="nav-link" href="http://localhost:8089/campeon/borrar">Borrar</a>
                 </li>
             </ul>
-            <form class="d-flex" th:action="@{/campeon/find/}" method="post">
-                <input  id="id" name="id" class="form-control me-2" type="text" placeholder="Search" for="search">
-                <button class="btn btn-primary" type="button" id="search">Search</button>
-            </form>
         </div>
     </div>
 </nav>
